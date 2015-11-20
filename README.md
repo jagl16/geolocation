@@ -8,10 +8,17 @@ You must request android.permission.ACCESS_COARSE_LOCATION & android.permission.
 
 iOS:
 In iOS 8 you now have to call either RequestWhenInUseAuthorization or RequestAlwaysAuthorization on the location manager. Additionally you need to add either the concisely named NSLocationWhenInUseUsageDescription or NSLocationAlwaysUsageDescription to your Info.plist.
-See:  http://motzcod.es/post/97662738237/scanning-for-ibeacons-in-ios-8
 
 
 Getting Started:
+
+<pre>
+    //When the application starts call
+    //iOS
+    CrossGeolocatorManager.configure(new IOSGeolocator());
+    //Android
+    CrossGeolocatorManager.configure(new DroidGeolocator());
+</pre>
 
 <pre>
     //Get platform independent Geolocator manager object
@@ -39,7 +46,6 @@ Getting Started:
     System.out.println("Position Latitude: "+position.latitude);
     System.out.println("Position Longitude: "+ position.longitude);
 </pre>
-
 
 
 

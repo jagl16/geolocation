@@ -1,5 +1,6 @@
 package jg.robolibs.geolocation;
 
+import org.robovm.apple.corelocation.CLAuthorizationStatus;
 import org.robovm.apple.corelocation.CLLocation;
 import org.robovm.apple.corelocation.CLLocationManager;
 import org.robovm.apple.corelocation.CLLocationManagerDelegateAdapter;
@@ -18,8 +19,17 @@ public class IOSGeolocator extends BaseGeolocator {
 
     public IOSGeolocator() {
         locationManager = new CLLocationManager();
-        locationManager.requestWhenInUseAuthorization();
+        adapter = new IOSDelegateAdapter(this);
+        CLAuthorizationStatus status = CLLocationManager.getAuthorizationStatus();
+        if(status == CLAuthorizationStatus.Denied || status == CLAuthorizationStatus.Restricted)
+            throw new SecurityException("Authorization services are not enabled or are restricted");
+        locationManager.requestAlwaysAuthorization();
         locationManager.setDelegate(adapter);
+        if(!CLLocationManager.isLocationServicesEnabled()) {
+            //don't do anything
+            throw new IllegalArgumentException("CLLocationManager location services are disabled");
+        }
+
     }
 
     @Override
@@ -34,7 +44,7 @@ public class IOSGeolocator extends BaseGeolocator {
 
     @Override
     public void startListening(long minTime, float minDistance) {
-        locationManager.startMonitoringSignificantLocationChanges();
+        locationManager.startUpdatingLocation();
     }
 
     @Override
