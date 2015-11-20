@@ -45,6 +45,8 @@ public class IOSGeolocator extends BaseGeolocator {
     @Override
     public Position getLastPosition() {
         CLLocation location = locationManager.getLocation();
+        if(location == null)
+            return null;
         return new Position(location.getCoordinate().getLatitude(), location.getCoordinate().getLongitude());
     }
 
