@@ -1,0 +1,25 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+plugins {
+    id "me.tatarka.retrolambda" version "3.2.2"
+}
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+
+version '0.1'
+group 'jg.robolibs'
+
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
